@@ -67,7 +67,7 @@ public class SnakeGame {
         for (int y = 0; y < board.length; y++) {
             for (int x = 0; x < board[y].length; x++) {
                 var token = board[y][x];
-                keyboardControl.setLED(x, y, token);
+                keyboardControl.setLED(x, y, token.getColor());
             }
         }
     }
@@ -135,11 +135,4 @@ public class SnakeGame {
             this.direction = direction;
         }
     }
-
-    public enum Token {
-        EMPTY,
-        FOOD,
-        SNAKE
-    }
-
 }
