@@ -129,19 +129,11 @@ public class SnakeGame {
         this.board[food.y][food.x] = Token.FOOD;
     }
 
-    private MovingDirection getOpposite(MovingDirection direction) {
-        return MovingDirection.values()[(direction.ordinal() + 2) % 4];
-    }
-
     public void move(MovingDirection direction) {
-        if (direction != getOpposite(this.direction)) {
+        if (direction != this.direction.getOpposite()) {
             System.out.println("New direction: " + direction.toString());
             this.direction = direction;
         }
-    }
-
-    public enum MovingDirection {
-        LEFT, UP, RIGHT, DOWN
     }
 
     public enum Token {
