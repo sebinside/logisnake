@@ -11,12 +11,12 @@ public class SnakeGame {
 
     public final KeyboardControl keyboardControl;
 
-    private final int boardWidth = 10;
-    private final int boardHeight = 4;
+    private final int BOARD_WIDTH = 10;
+    private final int BOARD_HEIGHT = 4;
 
-    private final Token[][] board = new Token[boardHeight][boardWidth];
+    private final Token[][] board = new Token[BOARD_HEIGHT][BOARD_WIDTH];
     private final List<Position> snake = new ArrayList<>();
-    private final int roundDelay = 300;
+    private final int ROUND_DELAY = 300;
     private Position food;
     private MovingDirection direction = MovingDirection.LEFT;
 
@@ -30,7 +30,7 @@ public class SnakeGame {
             while (true) {
                 calculateNewRound();
                 try {
-                    Thread.sleep(roundDelay);
+                    Thread.sleep(ROUND_DELAY);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -56,8 +56,8 @@ public class SnakeGame {
         var random = new Random();
         Position position;
         do {
-            var x = random.nextInt(boardWidth);
-            var y = random.nextInt(boardHeight);
+            var x = random.nextInt(BOARD_WIDTH);
+            var y = random.nextInt(BOARD_HEIGHT);
             position = new Position(x, y);
         } while (this.snake.contains(position));
         this.food = position;
@@ -91,7 +91,7 @@ public class SnakeGame {
             var last = this.snake.get(this.snake.size() - 1);
             this.snake.add(new Position(last.getX(), last.getY()));
 
-            if (snake.size() == boardHeight * boardWidth) {
+            if (snake.size() == BOARD_HEIGHT * BOARD_WIDTH) {
                 resetSnake();
             }
 
@@ -107,16 +107,16 @@ public class SnakeGame {
         var head = this.snake.get(0);
         switch (this.direction) {
             case LEFT:
-                head.setX((head.getX() - 1 + boardWidth) % boardWidth);
+                head.setX((head.getX() - 1 + BOARD_WIDTH) % BOARD_WIDTH);
                 break;
             case RIGHT:
-                head.setX((head.getX() + 1 + boardWidth) % boardWidth);
+                head.setX((head.getX() + 1 + BOARD_WIDTH) % BOARD_WIDTH);
                 break;
             case UP:
-                head.setY((head.getY() - 1 + boardHeight) % boardHeight);
+                head.setY((head.getY() - 1 + BOARD_HEIGHT) % BOARD_HEIGHT);
                 break;
             case DOWN:
-                head.setY((head.getY() + 1 + boardHeight) % boardHeight);
+                head.setY((head.getY() + 1 + BOARD_HEIGHT) % BOARD_HEIGHT);
                 break;
         }
     }
