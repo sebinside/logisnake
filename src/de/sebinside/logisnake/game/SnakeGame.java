@@ -89,7 +89,7 @@ public class SnakeGame {
     private void checkFood() {
         if (this.snake.get(0).equals(this.food)) {
             var last = this.snake.get(this.snake.size() - 1);
-            this.snake.add(new Position(last.getX(), last.getY()));
+            this.snake.add(new Position(last));
 
             if (snake.size() == boardHeight * boardWidth) {
                 resetSnake();
@@ -101,7 +101,7 @@ public class SnakeGame {
 
     private void moveSnake() {
         for (int i = this.snake.size() - 1; i > 0; i--) {
-            this.snake.set(i, new Position(this.snake.get(i - 1).getX(), this.snake.get(i - 1).getY()));
+            this.snake.set(i, new Position(this.snake.get(i - 1)));
         }
 
         var head = this.snake.get(0);
