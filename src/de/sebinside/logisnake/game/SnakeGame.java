@@ -67,7 +67,7 @@ public class SnakeGame {
         for (int y = 0; y < board.length; y++) {
             for (int x = 0; x < board[y].length; x++) {
                 var token = board[y][x];
-                keyboardControl.setLED(x, y, token);
+                keyboardControl.setLED(x, y, token.getColor());
             }
         }
     }
@@ -89,7 +89,7 @@ public class SnakeGame {
     private void checkFood() {
         if (this.snake.get(0).equals(this.food)) {
             var last = this.snake.get(this.snake.size() - 1);
-            this.snake.add(new Position(last.getX(), last.getY()));
+            this.snake.add(new Position(last));
 
             if (snake.size() == boardHeight * boardWidth) {
                 resetSnake();
@@ -101,7 +101,7 @@ public class SnakeGame {
 
     private void moveSnake() {
         for (int i = this.snake.size() - 1; i > 0; i--) {
-            this.snake.set(i, new Position(this.snake.get(i - 1).getX(), this.snake.get(i - 1).getY()));
+            this.snake.set(i, new Position(this.snake.get(i - 1)));
         }
 
         var head = this.snake.get(0);
@@ -129,25 +129,10 @@ public class SnakeGame {
         this.board[food.y][food.x] = Token.FOOD;
     }
 
-    private MovingDirection getOpposite(MovingDirection direction) {
-        return MovingDirection.values()[(direction.ordinal() + 2) % 4];
-    }
-
     public void move(MovingDirection direction) {
-        if (direction != getOpposite(this.direction)) {
+        if (direction != this.direction.getOpposite()) {
             System.out.println("New direction: " + direction.toString());
             this.direction = direction;
         }
     }
-
-    public enum MovingDirection {
-        LEFT, UP, RIGHT, DOWN
-    }
-
-    public enum Token {
-        EMPTY,
-        FOOD,
-        SNAKE
-    }
-
 }
