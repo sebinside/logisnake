@@ -11,3 +11,5 @@ Then you can simply launch the jar file.
 
 If you don't want to play on your keyboard, simply don't
 download the Logitech Java-API and launch the jar file without it.
+
+LogiSnake Requires at least Java 11.
