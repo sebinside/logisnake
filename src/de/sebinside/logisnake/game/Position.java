@@ -2,12 +2,15 @@ package de.sebinside.logisnake.game;
 
 import java.util.Objects;
 
+/**
+ * A mutable position on the board. Defined by X and Y
+ */
 public class Position {
 
-    int x;
-    int y;
+    private int x;
+    private int y;
 
-    Position(int x, int y) {
+    public Position(int x, int y) {
         this.x = x;
         this.y = y;
     }
@@ -26,6 +29,19 @@ public class Position {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public void set(Position other) {
+        this.x = other.x;
+        this.y = other.y;
+    }
+
+    public Position copy() {
+        return new Position(x, y);
+    }
+
+    public Position offset(int xOffset, int yOffset) {
+        return new Position(x + xOffset, y + yOffset);
     }
 
     @Override
