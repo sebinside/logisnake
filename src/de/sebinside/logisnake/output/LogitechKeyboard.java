@@ -33,17 +33,26 @@ public class LogitechKeyboard implements IOutputDevice {
         // Initialise dummy window
 
         JFrame frame = new JFrame("logisnake");
-        frame.addKeyListener(new DefaultKeyListener(eventDispatcher, shutdownDispatcher));
-        frame.pack();
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setUndecorated(true);
         frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
                 shutdownDispatcher.run();
             }
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+                // We lost focus. Shutdown
+                shutdownDispatcher.run();
+            }
         });
-        frame.setLocationRelativeTo(null);
+        frame.addKeyListener(new DefaultKeyListener(eventDispatcher, shutdownDispatcher));
+        frame.pack();
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setSize(0, 0);
+        frame.setLocation(0, 0);
         frame.setVisible(true);
+        frame.requestFocus();
     }
 
     @Override
