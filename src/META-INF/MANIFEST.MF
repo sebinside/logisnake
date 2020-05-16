@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Main-Class: de.sebinside.logisnake.Main
+Class-Path: logiled.jar
+Created-By: skate702
+
