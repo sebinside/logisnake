@@ -28,6 +28,11 @@ public class SnakeGame {
      */
     public static final int INITIAL_ROUND_DELAY = 300;
 
+    /**
+     * The initial length of the snake.
+     */
+    public static final int INITIAL_LENGTH = 3;
+
     private final IOutputDevice output;
     private final Object lock = new Object(); // Used to synchronise access to the current direction as it's
                                               // changed from another thread via `IOutputDevice`
@@ -70,9 +75,11 @@ public class SnakeGame {
     private void resetSnake() {
         synchronized (lock) {
             snake.clear();
-            snake.add(new Position(5, 2));
-            snake.add(new Position(6, 2));
-            snake.add(new Position(7, 2));
+            Position head = new Position(5, 2);
+            snake.add(head);
+            for (int i = 1;i < INITIAL_LENGTH;i++) {
+                snake.add(head.offset(i, 0));
+            }
             direction = MovingDirection.LEFT;
         }
     }
@@ -92,8 +99,7 @@ public class SnakeGame {
         do {
             position = new Position(random.nextInt(BOARD_WIDTH), random.nextInt(BOARD_HEIGHT));
         } while (this.snake.contains(position));
-        this.food.setX(position.getX());
-        this.food.setY(position.getY());
+        this.food.set(position);
     }
 
     /**
@@ -140,7 +146,7 @@ public class SnakeGame {
     private void checkFood() {
         if (this.snake.get(0).equals(this.food)) {
             var last = this.snake.get(this.snake.size() - 1);
-            this.snake.add(new Position(last.getX(), last.getY()));
+            this.snake.add(last.copy());
 
             if (snake.size() >= BOARD_HEIGHT * BOARD_WIDTH) {
                 roundDelay = (int) (roundDelay / 1.5); // The snake will move faster if  you won once.
@@ -156,7 +162,7 @@ public class SnakeGame {
      */
     private void moveSnake() {
         for (int i = this.snake.size() - 1; i > 0; i--) {
-            this.snake.set(i, new Position(this.snake.get(i - 1).getX(), this.snake.get(i - 1).getY()));
+            this.snake.set(i, this.snake.get(i - 1).copy());
         }
 
         var head = this.snake.get(0);

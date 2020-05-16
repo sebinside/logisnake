@@ -31,6 +31,19 @@ public class Position {
         this.y = y;
     }
 
+    public void set(Position other) {
+        this.x = other.x;
+        this.y = other.y;
+    }
+
+    public Position copy() {
+        return new Position(x, y);
+    }
+
+    public Position offset(int xOffset, int yOffset) {
+        return new Position(x + xOffset, y + yOffset);
+    }
+
     @Override
     public String toString() {
         return "(" + x + "," + y + ")";
